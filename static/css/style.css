@@ -222,7 +222,9 @@ strong { font-weight: 650; color: #fff; }
   width: 100%; height: 100%; object-fit: cover;
   clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
   animation: triangle-open 1.6s cubic-bezier(.7, 0, .2, 1) .15s both;
+  transition: opacity .3s linear;
 }
+.hero-video.is-dark { opacity: 0; }
 /* The magpie flies in the right third of the clip. On portrait screens the video
    fills only the top of the hero (so less of the frame is cropped away), the
    visible slice slides right to keep the bird in it, and it fades into black
@@ -253,10 +255,11 @@ strong { font-weight: 650; color: #fff; }
   width: 100%; max-width: var(--max); margin: 0 auto;
   padding: calc(var(--nav-h) + 40px) var(--gutter) clamp(72px, 12vh, 140px);
 }
-/* portrait: the headline starts at the magpie's feet, not at the bottom of the screen */
+/* portrait: the headline starts at the magpie's feet, not at the bottom of the screen,
+   and the hero ends shortly after the buttons, with the AI credit just below them */
 @media (orientation: portrait) {
-  .hero { align-items: start; }
-  .hero-copy { padding-top: 40svh; }
+  .hero { align-items: start; min-height: 0; }
+  .hero-copy { padding-top: 40svh; padding-bottom: 72px; }
 }
 
 .hero-title {
@@ -316,9 +319,16 @@ strong { font-weight: 650; color: #fff; }
   padding-block: clamp(80px, 12vw, 160px);
 }
 
+/* The portrait is seen through the brand triangle (same corners as triangle.svg),
+   with the solid coral triangle offset behind it. No cutout, so no cut edges. */
 .portrait { position: relative; margin: 0; aspect-ratio: 1 / 1; }
-.portrait-triangle { position: absolute; left: 0; bottom: 0; width: 82%; }
-.portrait-photo { position: relative; width: 88%; margin-left: 12%; filter: grayscale(1) contrast(1.05); }
+.portrait-triangle { position: absolute; inset: 0; width: 100%; height: 100%; translate: -5% 5%; }
+.portrait-photo {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: 100% 0%;
+  clip-path: polygon(0% 100%, 25.8% 0%, 100% 72.3%);
+  filter: grayscale(1) contrast(1.05);
+}
 
 .intro-text { max-width: var(--text); }
 .intro-text .section-title { margin-bottom: 28px; }
@@ -625,7 +635,7 @@ body[class*="page-"] .container { max-width: 992px; }
 
 @media (max-width: 900px) {
   .intro { grid-template-columns: 1fr; }
-  .portrait { max-width: 420px; }
+  .portrait { max-width: 420px; margin-left: 5%; }
   .teaser-grid { grid-template-columns: 1fr; }
   .case { grid-template-columns: 1fr; }
   .case-flip .case-media { order: 0; }
@@ -633,10 +643,17 @@ body[class*="page-"] .container { max-width: 992px; }
   .course-list { grid-template-columns: 1fr; }
   .lab-skills { grid-template-columns: 1fr; gap: 20px; }
   .lab-now { justify-self: stretch; }
+  /* The stacked copy makes the Lab very tall, so the loops would be cropped to a
+     sliver. Instead they play in a band at the top and fade into black behind
+     the copy, with the magpie clip framed on the bird. */
+  .lab { align-items: start; }
+  .lab-stage { bottom: auto; height: 62svh; background: var(--ink); }
+  .lab-scene[data-slug="hero-magpie"] { object-position: 80% 50%; }
   .lab-scrim {
     background:
-      linear-gradient(to bottom, rgba(0,0,0,.75) 0%, rgba(0,0,0,.82) 50%, rgba(0,0,0,.92) 100%);
+      linear-gradient(to bottom, rgba(0,0,0,.2) 0%, rgba(0,0,0,.35) 55%, #000 100%);
   }
+  .lab-inner { padding-top: 40svh; }
   .hero-shade {
     background: linear-gradient(to top, rgba(0,0,0,.95) 10%, rgba(0,0,0,.35) 60%, rgba(0,0,0,.2));
   }

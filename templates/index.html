@@ -29,7 +29,7 @@
 <section class="intro" aria-labelledby="intro-title">
   <figure class="portrait">
     <img class="portrait-triangle" src="{{ url_for('static', filename='pictures/triangle.svg') }}" alt="" width="687" height="691">
-    <img class="portrait-photo" src="{{ url_for('static', filename='pictures/arnaldohero.png') }}" alt="Arnaldo Pangia" width="540" height="543" loading="lazy">
+    <img class="portrait-photo" src="{{ url_for('static', filename='pictures/arnaldo.jpg') }}" alt="Arnaldo Pangia at the seafront" width="1500" height="1000" loading="lazy">
   </figure>
   <div class="intro-text">
     <h2 id="intro-title" class="section-title">Hi, I'm Arnaldo.</h2>
@@ -68,7 +68,7 @@
 <section class="lab is-paused" id="lab" aria-labelledby="lab-title">
   <div class="lab-stage" aria-hidden="true">
     {% for clip in lab_clips %}
-    <video class="lab-scene{% if loop.first %} is-active{% endif %}" muted loop playsinline
+    <video class="lab-scene{% if loop.first %} is-active{% endif %}" data-slug="{{ clip.slug }}" muted loop playsinline
            preload="{{ 'auto' if loop.first else 'none' }}"
            poster="{{ url_for('static', filename='video/' ~ clip.slug ~ '.jpg') }}">
       <source src="{{ url_for('static', filename='video/' ~ clip.slug ~ '.mp4') }}" type="video/mp4">

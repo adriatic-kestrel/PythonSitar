@@ -43,6 +43,29 @@
     if (reduceMotion) { v.removeAttribute('autoplay'); v.pause(); }
   });
 
+  // Hero magpie: the clip doesn't loop seamlessly, so it fades to black for its
+  // last 0.3s, holds 2s of darkness, then fades back in from the first frame.
+  const heroVideo = document.querySelector('.hero-video');
+  if (heroVideo && !reduceMotion) {
+    const FADE = 0.3, HOLD = 2000;
+    heroVideo.loop = false;
+    const watch = () => {
+      if (heroVideo.duration && heroVideo.currentTime >= heroVideo.duration - FADE) {
+        heroVideo.classList.add('is-dark');
+      }
+      requestAnimationFrame(watch);
+    };
+    requestAnimationFrame(watch);
+    heroVideo.addEventListener('ended', () => {
+      heroVideo.classList.add('is-dark');
+      setTimeout(() => {
+        heroVideo.currentTime = 0;
+        play(heroVideo);
+        heroVideo.classList.remove('is-dark');
+      }, HOLD);
+    });
+  }
+
   // Background loops only play while on screen.
   const bgVideos = document.querySelectorAll('video[data-autoplay]');
 
