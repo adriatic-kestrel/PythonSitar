@@ -163,6 +163,28 @@ strong { font-weight: 650; color: #fff; }
 .hamburger {
   display: none; background: none; border: 0; color: #fff; padding: 8px; cursor: pointer;
 }
+/* Burger to X: all three bars are drawn on the centre line and the outer two are
+   pushed apart, so they can slide back to the middle and turn about the true
+   centre into a symmetric X;
+   the middle bar shrinks away. Closing plays the same steps in reverse.
+   Same easing as the hero's triangle reveal. */
+.hamburger svg { shape-rendering: geometricPrecision; overflow: visible; }
+.hamburger path {
+  stroke: currentColor; stroke-width: 1.75; stroke-linecap: square; fill: none;
+  transform-box: view-box; transform-origin: 12px 12px;
+  --ease: cubic-bezier(.7, 0, .2, 1);
+}
+.hamburger .burger-top,
+.hamburger .burger-bot { transition: translate .16s var(--ease) .16s, rotate .2s var(--ease); }
+.hamburger .burger-top { translate: 0 -6px; }
+.hamburger .burger-bot { translate: 0 6px; }
+.hamburger .burger-mid { transition: scale .16s var(--ease) .16s, opacity .16s var(--ease) .16s; }
+.hamburger[aria-expanded="true"] { color: var(--coral); }
+.hamburger[aria-expanded="true"] .burger-top,
+.hamburger[aria-expanded="true"] .burger-bot { transition: translate .16s var(--ease), rotate .2s var(--ease) .16s; }
+.hamburger[aria-expanded="true"] .burger-top { translate: 0 0; rotate: 45deg; }
+.hamburger[aria-expanded="true"] .burger-bot { translate: 0 0; rotate: -45deg; }
+.hamburger[aria-expanded="true"] .burger-mid { scale: 0 1; opacity: 0; transition: scale .16s var(--ease), opacity .16s var(--ease); }
 
 @media (max-width: 820px) {
   .hamburger { display: block; }
@@ -201,6 +223,18 @@ strong { font-weight: 650; color: #fff; }
   clip-path: polygon(0% 100%, 50% 0%, 100% 100%);
   animation: triangle-open 1.6s cubic-bezier(.7, 0, .2, 1) .15s both;
 }
+/* The magpie flies in the right third of the clip. On portrait screens the video
+   fills only the top of the hero (so less of the frame is cropped away), the
+   visible slice slides right to keep the bird in it, and it fades into black
+   behind the headline. */
+@media (orientation: portrait) {
+  .hero-media { bottom: auto; height: 64svh; background: var(--ink); }
+  .hero-media::after {
+    content: ""; position: absolute; inset: 0;
+    background: linear-gradient(to top, #000 0%, rgba(0,0,0,0) 35%);
+  }
+  .hero-video { object-position: 90% 50%; }
+}
 
 @keyframes triangle-open {
   from { clip-path: polygon(46% 58%, 50% 50%, 54% 58%); }
@@ -218,6 +252,11 @@ strong { font-weight: 650; color: #fff; }
 .hero-copy {
   width: 100%; max-width: var(--max); margin: 0 auto;
   padding: calc(var(--nav-h) + 40px) var(--gutter) clamp(72px, 12vh, 140px);
+}
+/* portrait: the headline starts at the magpie's feet, not at the bottom of the screen */
+@media (orientation: portrait) {
+  .hero { align-items: start; }
+  .hero-copy { padding-top: 40svh; }
 }
 
 .hero-title {

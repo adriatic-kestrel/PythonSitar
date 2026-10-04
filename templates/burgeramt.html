@@ -17,7 +17,6 @@
            poster="{{ url_for('static', filename='video/' ~ clip.slug ~ '.jpg') }}">
       <source src="{{ url_for('static', filename='video/' ~ clip.slug ~ '.mp4') }}" type="video/mp4">
     </video>
-    <div class="ba-board"><span>Aufruf</span><b id="ba-number">0815</b></div>
     <div class="ba-feed"><div class="ba-feed-inner"></div></div>
   </div>
 
@@ -49,7 +48,6 @@
   var root = document.querySelector('.ba');
   var stage = root.querySelector('.ba-stage');
   var feed = stage.querySelector('.ba-feed-inner');
-  var number = document.getElementById('ba-number');
   var replay = document.getElementById('ba-replay');
   var lines = Array.prototype.slice.call(root.querySelectorAll('.ba-line'));
   var timers = [];
@@ -101,7 +99,6 @@
     stage.className = 'ba-stage';
     feed.innerHTML = '';
     lines.forEach(function (l) { l.classList.remove('is-shown'); });
-    number.textContent = '0815';
     root.classList.add('is-playing');
     replay.hidden = true;
   }
@@ -121,14 +118,15 @@
       await wait(1500 + words.length * 12);
     }
 
-    // Nächster! The board calls the next number and the bubbles clear.
-    number.textContent = '0816';
-    stage.classList.add('is-next', 'is-cleared');
+    // Nächster! The bubbles clear and the scene can be watched again.
+    stage.classList.add('is-cleared');
     await wait(1200);
     root.classList.remove('is-playing');
     replay.hidden = false;
   }
 
+  // The scene carries the dialogue, so the transcript can step aside on phones.
+  root.classList.add('has-scene');
   replay.addEventListener('click', play);
   play();
 })();
