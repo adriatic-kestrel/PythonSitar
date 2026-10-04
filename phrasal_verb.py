@@ -142,3 +142,31 @@ def definition():
             definition_verb[definition_verb_marker],
             definition_object[definition_object_marker],
             definition_adverb[definition_adverb_marker])
+
+
+grammar_label_list = ["vi phrasal",
+        "vtr phrasal sep",
+        "vtr phrasal insep",
+        "vtr phrasal, very informal",
+        "vi phrasal, Berlin only",
+        "vtr phrasal, archaic",
+        "vi phrasal, regional (Siena)"]
+
+example_list = ["Every Monday my manager tries to {} the whole team.",
+        "You can't just {} a sandwich like that.",
+        "We decided to {} the budget meeting.",
+        "Please don't {} the cat.",
+        "Nobody knows how to {} properly anymore.",
+        "My nonna used to {} the tomatoes every Sunday.",
+        "If you {} the printer one more time, it will quit.",
+        "The landlord threatened to {} the whole building.",
+        "I only came here to {} and leave.",
+        "In Berlin it is perfectly normal to {} on a Tuesday."]
+
+
+def grammar_label():
+    return random.choice(grammar_label_list)
+
+
+def example(phrase):
+    return random.choice(example_list).format(phrase.lower())

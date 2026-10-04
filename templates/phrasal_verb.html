@@ -1,13 +1,75 @@
 {% extends 'base.html' %}
+
+{% block title %}Phrasal Verb generator{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/wacky.css') }}">
+{% endblock %}
+
 {% block content %}
-
-
-<div class="container">
-  <div class="wackybox">
-	  <h1><center> {{data.verb }} </center></h1>
-	  <hr class="solid">
-	  <p>Definition: {{ data.definition }}</p>
+<div class="dict">
+  <div class="dict-top">
+    <a class="dict-brand" href="{{ url_for('phrasal_verb') }}">PhrasalReference<span>Dictionaries of verbs nobody uses</span></a>
+    <form class="dict-search" action="{{ url_for('phrasal_verb') }}" method="get" role="search">
+      <label class="visually-hidden" for="dict-q">Look up a phrasal verb</label>
+      <input id="dict-q" name="q" type="search" maxlength="40" placeholder="Type any phrasal verb" value="{{ data.verb if data.searched }}" autocomplete="off">
+      <button type="submit">Look it up</button>
+    </form>
+    <div class="dict-tabs" aria-label="Dictionary">
+      <span class="is-active">English definition</span>
+      <span>English usage (discouraged)</span>
+    </div>
   </div>
-  {% include 'wackynav.html' %}
- 
+
+  <div class="dict-page">
+    <article class="dict-entry" aria-labelledby="dict-word">
+      <header class="dict-head">
+        <h1 id="dict-word">{{ data.verb }}</h1>
+        <p class="dict-pron">/{{ data.verb|lower }}/ &nbsp;·&nbsp; pronounced with confidence</p>
+      </header>
+
+      <table class="dict-table">
+        <caption>Principal meanings</caption>
+        <thead>
+          <tr><th scope="col">English</th><th scope="col">Meaning</th></tr>
+        </thead>
+        {% for sense in data.senses %}
+        <tbody>
+          <tr>
+            <th scope="row"><b>{{ data.verb }}</b> <em>{{ data.label }}</em></th>
+            <td><span class="dict-num">{{ loop.index }}.</span> {{ sense.definition }}</td>
+          </tr>
+          <tr class="dict-example">
+            <td></td>
+            <td>{{ sense.example }}</td>
+          </tr>
+        </tbody>
+        {% endfor %}
+      </table>
+
+      <div class="dict-actions">
+        <a class="dict-btn dict-btn-primary" href="{{ url_for('phrasal_verb') }}">Random phrasal verb</a>
+        <a class="dict-btn" href="{{ url_for('wacky') }}">Back to Wacky Code</a>
+      </div>
+    </article>
+
+    <aside class="dict-side">
+      <section>
+        <h2>See also</h2>
+        <ul>
+          {% for verb in data.see_also %}
+          <li><a href="{{ url_for('phrasal_verb', q=verb) }}">{{ verb }}</a></li>
+          {% endfor %}
+        </ul>
+      </section>
+      <section>
+        <h2>Forum discussions with the word "{{ data.verb }}"</h2>
+        <ul class="dict-forum">
+          <li><a href="{{ url_for('phrasal_verb', q=data.verb) }}">Is "{{ data.verb|lower }}" OK in a cover letter?</a></li>
+          <li><a href="{{ url_for('phrasal_verb', q=data.see_also[0]) }}">"{{ data.verb|lower }}" vs "{{ data.see_also[0]|lower }}"</a></li>
+          <li><a href="{{ url_for('phrasal_verb') }}">My English teacher says this is not a word</a></li>
+        </ul>
+      </section>
+    </aside>
+  </div>
+</div>
 {% endblock %}

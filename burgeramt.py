@@ -33,7 +33,7 @@ brauche_wrong_list = ["brauche",
                       "brennwert",
                       "breuche",
                       "brodo",
-                      "broche"
+                      "broche",
                       "br...brouch...brauch...broucho",
                       "brant",
                       "... uh, need",

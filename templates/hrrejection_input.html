@@ -1,27 +1,87 @@
 {% extends 'base.html' %}
+
+{% block title %}HR Rejection Generator{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/wacky.css') }}">
+{% endblock %}
+
 {% block content %}
+<div class="mail-intro">
+  <h1>HR Rejection Generator</h1>
+  <p>Every application deserves a reply. This inbox makes sure you get one, every time.</p>
+</div>
 
-
-<div class="container">
-  <div class="wackybox">
-    <h1>
-      <center> HR Rejection Generator </center>
-    </h1>
-    <hr class="solid">
-    <p> {{data.hr_part1}} Arnaldo,
-      <br> {{data.hr_part2}} that you {{data.hr_part3}} to this application.
-    <p> {{data.hr_part4}} we cannot proceed with your recruiting process this time.
-    <p> Please note that our decision was not based on your capabilities, but rather with your compatibility with the
-      open position.
-      <br> {{data.hr_part5}}
-    <p> {{data.hr_part6}} your future work endeavours.
-    <p> Best regards,
-
-    </div>
+<div class="mail-app">
+  <div class="mail-toolbar">
+    <a class="mail-btn mail-btn-primary" href="{{ url_for('hrrejection') }}">Get another rejection</a>
+    <a class="mail-btn" href="{{ url_for('wacky') }}">Back to Wacky Code</a>
+    <span class="mail-search" aria-hidden="true">Search: "offer"&nbsp;&nbsp;0 results</span>
   </div>
-  {% include 'wackynav.html' %}
-</div>
-</div>
-</div>
+
+  <nav class="mail-folders" aria-label="Mail folders">
+    <a class="is-active" href="{{ url_for('hrrejection') }}"><span>Inbox</span><b>99+</b></a>
+    <a href="{{ url_for('hrrejection') }}"><span>Rejections</span><b>4,817</b></a>
+    <a href="{{ url_for('hrrejection') }}"><span>Ghosted</span><b>∞</b></a>
+    <a href="{{ url_for('hrrejection') }}"><span>Offers</span><b>0</b></a>
+    <a href="{{ url_for('hrrejection') }}"><span>Spam</span><b>12</b></a>
+  </nav>
+
+  <ul class="mail-list" aria-label="Messages">
+    <li class="is-active is-unread">
+      <a href="#mail-message">
+        <span class="mail-from">Talent Acquisition</span>
+        <span class="mail-time">now</span>
+        <span class="mail-subject">Your application</span>
+        <span class="mail-snippet">{{ data.hr_part1|trim }} Arnaldo, {{ data.hr_part2|trim }}…</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('hrrejection') }}">
+        <span class="mail-from">People &amp; Culture</span>
+        <span class="mail-time">Yesterday</span>
+        <span class="mail-subject">Update on your application</span>
+        <span class="mail-snippet">After careful consideration of your careful consideration…</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('hrrejection') }}">
+        <span class="mail-from">Recruiting Team</span>
+        <span class="mail-time">Mon</span>
+        <span class="mail-subject">Thank you for your interest</span>
+        <span class="mail-snippet">We received an overwhelming number of applications…</span>
+      </a>
+    </li>
+    <li>
+      <a href="{{ url_for('hrrejection') }}">
+        <span class="mail-from">no-reply</span>
+        <span class="mail-time">Last year</span>
+        <span class="mail-subject">Re: Re: Re: Following up</span>
+        <span class="mail-snippet">This mailbox is not monitored. Neither are you.</span>
+      </a>
+    </li>
+  </ul>
+
+  <article class="mail-message" id="mail-message" aria-labelledby="mail-subject">
+    <header class="mail-head">
+      <h2 id="mail-subject">Your application</h2>
+      <dl>
+        <dt>From</dt><dd>Talent Acquisition Team &lt;no-reply@careers.invalid&gt;</dd>
+        <dt>To</dt><dd>Arnaldo</dd>
+        <dt>Date</dt><dd>{{ data.sent }}</dd>
+      </dl>
+    </header>
+    <div class="mail-body">
+      <p>{{ data.hr_part1|trim }} Arnaldo,</p>
+      <p>{{ data.hr_part2|trim }} that you {{ data.hr_part3|trim }} to this application.</p>
+      <p>{{ data.hr_part4|trim }} we cannot proceed with your recruiting process this time.</p>
+      <p>Please note that our decision was not based on your capabilities, but rather on your compatibility with the open position. {{ data.hr_part5|trim }}</p>
+      <p>{{ data.hr_part6|trim }} your future work endeavours.</p>
+      <p>Best regards,<br>The Talent Acquisition Team</p>
+    </div>
+    <footer class="mail-foot">
+      <a class="mail-btn mail-btn-primary" href="{{ url_for('hrrejection') }}">Get another rejection</a>
+      <span>Replies to this address go straight to the void.</span>
+    </footer>
+  </article>
 </div>
 {% endblock %}

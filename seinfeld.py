@@ -35,7 +35,9 @@ topic_list = [
     "Marc Zuckerberg",
     "Joe Biden",
     "all lives matter",
-    "systemic racismAIChatGPT",
+    "systemic racism",
+    "AI",
+    "ChatGPT",
 ]
 
 adjective_list = [

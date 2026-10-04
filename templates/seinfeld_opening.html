@@ -1,20 +1,38 @@
 {% extends 'base.html' %}
+
+{% block title %}2021 Seinfeld opening{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/wacky.css') }}">
+{% endblock %}
+
 {% block content %}
-
-
-<div class="container">
-  <div class="wackybox">
-	  <h1>2021 Seinfeld opening </h1>
-	  <hr class="solid">
-	  <p> What's the deal about {{data.seinf_part1}}?
-	  <br> People feel so {{data.seinf_part2}} when they talk about {{data.seinf_part1}}!<br>
-	  "Oh, did you read that article about {{data.seinf_part1}}?" <br> We get it!
-	  It's a freaking {{data.seinf_part3}}!
-	  <br> You think you're having a nice evening out <br> {{data.seinf_part4}} and somebody says:
-	  <br>
-	  "We gotta get outta here! It's bad for {{data.seinf_part1}}!"</p>
+<section class="sf" aria-labelledby="sf-title">
+  <div class="sf-media" aria-hidden="true">
+    <video class="sf-video" data-autoplay muted loop playsinline preload="auto"
+           poster="{{ url_for('static', filename='video/' ~ clip.slug ~ '.jpg') }}">
+      <source src="{{ url_for('static', filename='video/' ~ clip.slug ~ '.mp4') }}" type="video/mp4">
+    </video>
   </div>
 
-  {% include 'wackynav.html' %}
- 
+  <div class="sf-copy">
+    <h1 id="sf-title">2021 Seinfeld opening</h1>
+    <blockquote class="sf-bit">
+      <p>What's the deal with {{ data.seinf_part1 }}?</p>
+      <p>People feel so {{ data.seinf_part2 }} when they talk about {{ data.seinf_part1 }}!</p>
+      <p>“Oh, did you read that article about {{ data.seinf_part1 }}?”</p>
+      <p>We get it! It's a freaking {{ data.seinf_part3 }}!</p>
+      <p>You think you're having a nice evening out {{ data.seinf_part4 }}, and somebody says:</p>
+      <p class="sf-punch">“We gotta get outta here! It's bad for {{ data.seinf_part1 }}!”</p>
+    </blockquote>
+    <div class="sf-actions">
+      <a class="btn btn-solid" href="{{ url_for('seinfeld_opening') }}">Another bit</a>
+      <a class="btn btn-ghost" href="{{ url_for('wacky') }}">Back to Wacky Code</a>
+    </div>
+  </div>
+
+  <details class="sf-credit">
+    <summary>Generated with {{ clip.model }}. Show the prompt</summary>
+    <p>{{ clip.prompt }}</p>
+  </details>
+</section>
 {% endblock %}

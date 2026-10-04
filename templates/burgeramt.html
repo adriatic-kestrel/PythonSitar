@@ -1,18 +1,136 @@
 {% extends 'base.html' %}
+
+{% block title %}Ausländer im Bürgeramt{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/wacky.css') }}">
+{% endblock %}
+
 {% block content %}
-
-
-<div class="container">
-  <div class="wackybox">
-	  <h1> Ausländer im Burgeramt</h1>
-	  <hr class="solid">
-      <p class ="auslander"> - Guten Tag! {{data.part1}}, Ich {{data.part2}} nur ein bisschen Deutsch! </p>
-      <p class ="clerk"> - Naja, wat willste denn? Siehste, hier kommste nich einfach so rein, wa?</p> 
-      <p class ="auslander"> - ...Eh?! Uh...Ich {{data.part3}} ein {{data.part4}} </p> 
-      <p class ="clerk"> - Haste die {{data.part5}} mitjebrach? </p> 
-      <p class ="auslander"> - {{data.part6}}! {{data.part7}}?  </p>
-      <p class ="clerk"> - Ohne {{data.part5}} kann Ick nix machen. Mach dir einen neuen Termin aus und komm später wieder. <br>  Nächster! Zack zack!</p> 
+<div class="ba">
+  <div class="ba-intro">
+    <h1>Ausländer im Bürgeramt</h1>
+    <p>A short play in one act and zero appointments.</p>
   </div>
-  {% include 'wackynav.html' %}
- 
+
+  <div class="ba-stage" aria-hidden="true">
+    <video class="ba-video" data-autoplay muted loop playsinline preload="auto"
+           poster="{{ url_for('static', filename='video/' ~ clip.slug ~ '.jpg') }}">
+      <source src="{{ url_for('static', filename='video/' ~ clip.slug ~ '.mp4') }}" type="video/mp4">
+    </video>
+    <div class="ba-board"><span>Aufruf</span><b id="ba-number">0815</b></div>
+    <div class="ba-feed"><div class="ba-feed-inner"></div></div>
+  </div>
+
+  <ol class="ba-script" aria-label="Dialogue">
+    <li class="ba-line" data-speaker="guest"><span class="ba-who">Ausländer</span> Guten Tag! {{ data.part1 }}, ich {{ data.part2 }} nur ein bisschen Deutsch!</li>
+    <li class="ba-line" data-speaker="clerk"><span class="ba-who">Schalter 3</span> Naja, wat willste denn? Siehste, hier kommste nich einfach so rein, wa?</li>
+    <li class="ba-line" data-speaker="guest"><span class="ba-who">Ausländer</span> …Eh?! Uh… ich {{ data.part3 }} ein {{ data.part4 }}.</li>
+    <li class="ba-line" data-speaker="clerk"><span class="ba-who">Schalter 3</span> Haste die {{ data.part5 }} mitjebracht?</li>
+    <li class="ba-line" data-speaker="guest"><span class="ba-who">Ausländer</span> {{ data.part6 }}{% if not data.part6.endswith('!') %}!{% endif %} {{ data.part7 }}?</li>
+    <li class="ba-line" data-speaker="clerk"><span class="ba-who">Schalter 3</span> Ohne {{ data.part5 }} kann ick nix machen. Mach dir einen neuen Termin aus und komm später wieder. Nächster! Zack zack!</li>
+  </ol>
+
+  <div class="ba-actions">
+    <button class="ba-btn ba-btn-primary" type="button" id="ba-replay" hidden>Watch again</button>
+    <a class="ba-btn" href="{{ url_for('burgeramt') }}">New appointment</a>
+    <a class="ba-btn" href="{{ url_for('wacky') }}">Back to Wacky Code</a>
+  </div>
+
+  <details class="ba-credit">
+    <summary>Generated with {{ clip.model }}. Show the prompt</summary>
+    <p>{{ clip.prompt }}</p>
+  </details>
+</div>
+
+<script>
+(function () {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  var root = document.querySelector('.ba');
+  var stage = root.querySelector('.ba-stage');
+  var feed = stage.querySelector('.ba-feed-inner');
+  var number = document.getElementById('ba-number');
+  var replay = document.getElementById('ba-replay');
+  var lines = Array.prototype.slice.call(root.querySelectorAll('.ba-line'));
+  var timers = [];
+
+  function wait(ms) {
+    return new Promise(function (resolve) { timers.push(setTimeout(resolve, ms)); });
+  }
+
+  function type(el, str) {
+    var i = 0;
+    return new Promise(function (resolve) {
+      (function next() {
+        el.textContent = str.slice(0, ++i);
+        if (i < str.length) timers.push(setTimeout(next, 28));
+        else resolve();
+      })();
+    });
+  }
+
+  // Add a bubble at the bottom of the feed and slide the older ones up (FLIP).
+  function addBubble(speaker, name) {
+    var bubble = document.createElement('div');
+    bubble.className = 'ba-bubble';
+    bubble.dataset.speaker = speaker;
+    bubble.innerHTML = '<span class="ba-bubble-who"></span><span class="ba-bubble-text"></span>';
+    bubble.firstChild.textContent = name;
+
+    var older = Array.prototype.slice.call(feed.children);
+    older.forEach(function (b) { b.classList.add('is-old'); });
+    feed.appendChild(bubble);
+
+    // The new bubble pops in place; the older ones start where they were and glide up.
+    var shift = bubble.offsetHeight + parseFloat(getComputedStyle(feed).rowGap || 0);
+    older.forEach(function (b) {
+      b.style.transition = 'none';
+      b.style.transform = 'translateY(' + shift + 'px)';
+    });
+    feed.offsetHeight;
+    older.forEach(function (b) {
+      b.style.transition = '';
+      b.style.transform = '';
+    });
+    return bubble.lastChild;
+  }
+
+  function reset() {
+    timers.forEach(clearTimeout);
+    timers = [];
+    stage.className = 'ba-stage';
+    feed.innerHTML = '';
+    lines.forEach(function (l) { l.classList.remove('is-shown'); });
+    number.textContent = '0815';
+    root.classList.add('is-playing');
+    replay.hidden = true;
+  }
+
+  async function play() {
+    reset();
+    await wait(800);
+
+    for (var i = 0; i < lines.length; i++) {
+      var line = lines[i];
+      var speaker = line.dataset.speaker;
+      var name = line.querySelector('.ba-who').textContent;
+      var words = line.textContent.replace(name, '').trim();
+      var textEl = addBubble(speaker, name);
+      line.classList.add('is-shown');
+      await type(textEl, words);
+      await wait(1500 + words.length * 12);
+    }
+
+    // Nächster! The board calls the next number and the bubbles clear.
+    number.textContent = '0816';
+    stage.classList.add('is-next', 'is-cleared');
+    await wait(1200);
+    root.classList.remove('is-playing');
+    replay.hidden = false;
+  }
+
+  replay.addEventListener('click', play);
+  play();
+})();
+</script>
 {% endblock %}

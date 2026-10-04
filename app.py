@@ -1,6 +1,6 @@
 from flask import Flask, render_template
 from datetime import datetime
-from phrasal_verb import definition, generated_verb
+from phrasal_verb import definition, example, generated_verb, grammar_label
 from burgeramt import (
     dialogue_part1,
     dialogue_part2,
@@ -51,6 +51,20 @@ LAB_CLIPS = [
     },
 ]
 
+# Background loop for the Seinfeld page, credited on the page like the Lab clips.
+SEINFELD_CLIP = {
+    "slug": "seinfeld-surreal",
+    "model": "Seedance 2.5 via Higgsfield, from a GPT Image 2.5 start and end frame",
+    "prompt": "Surreal, wacky low-poly stand-up comedy. The faceless coral zentai comedian tells a joke and his body goes absurd: his arms stretch like rubber far beyond the spotlight and snap back, his head spins a full turn on his neck, the microphone floats up out of his hand and drifts back into it, the spotlight circle wobbles like jelly on the brick wall. Then he settles back into exactly the same relaxed pose as the start. Flat-shaded faceted polygons, retro 3D game look, total darkness around the spotlight, static camera, seamless loop. No text, no audience.",
+}
+
+# Background loop for the Burgeramt page.
+BURGERAMT_CLIP = {
+    "slug": "burgeramt-counter",
+    "model": "Seedance 2.5 via Higgsfield, from a GPT Image 2.5 start and end frame",
+    "prompt": "Surreal, wacky low-poly scene at a German public office counter. The faceless coral zentai man is terrified while he talks: he trembles, shrinks into himself, clutches the folder tighter, peeks up at the clerk, flinches, makes small pleading apologetic gestures with one hand and nervously shifts his weight. The faceless white zentai woman behind the grey desk barely moves at all: she stays rigid and upright, only a tiny slow tilt of her head, completely unimpressed. Then everything settles back into exactly the starting poses. Flat-shaded faceted polygons, retro 3D game look, dark background, single overhead lamp, static camera, seamless loop. No text, no logos.",
+}
+
 @app.route('/robots.txt')
 def robots():
     return send_from_directory('static', 'robots.txt')
@@ -98,14 +112,28 @@ def wacky():
 
 @app.route("/phrasal_verb")
 def phrasal_verb():
+    # A searched term gets its own entry; otherwise invent a phrasal verb.
+    query = " ".join(request.args.get("q", "").split())[:40]
+    verb = query or generated_verb()
     return render_template(
-        "phrasal_verb.html", data={"definition": definition(), "verb": generated_verb()}
+        "phrasal_verb.html",
+        data={
+            "verb": verb,
+            "searched": bool(query),
+            "label": grammar_label(),
+            "senses": [
+                {"definition": definition(), "example": example(verb)},
+                {"definition": definition(), "example": example(verb)},
+            ],
+            "see_also": [generated_verb() for _ in range(4)],
+        },
     )
 
 @app.route("/burgeramt")
 def burgeramt():
     return render_template(
         "burgeramt.html",
+        clip=BURGERAMT_CLIP,
         data={
             "part1": dialogue_part1(),
             "part2": dialogue_part2(),
@@ -128,6 +156,7 @@ def hrrejection():
             "hr_part4": hr_part4(),
             "hr_part5": hr_part5(),
             "hr_part6": hr_part6(),
+            "sent": datetime.now().strftime("%a %d %b %Y, %H:%M"),
         },
     )
 
@@ -135,6 +164,7 @@ def hrrejection():
 def seinfeld_opening():
     return render_template(
         "seinfeld_opening.html",
+        clip=SEINFELD_CLIP,
         data={
             "seinf_part1": seinf_part1(),
             "seinf_part2": seinf_part2(),
