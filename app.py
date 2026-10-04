@@ -17,6 +17,40 @@ app = Flask(__name__)
 from flask import redirect, request
 from flask import send_from_directory
 
+
+@app.context_processor
+def inject_year():
+    return {"current_year": datetime.now().year}
+
+
+# Short loops shown in the Lab section. Each one was generated from a text prompt.
+LAB_CLIPS = [
+    {
+        "slug": "hero-magpie",
+        "title": "Magpie take-off",
+        "model": "Seedance 2.5 via Higgsfield",
+        "prompt": "Cinematic slow-motion shot of a single black-and-white magpie spreading its wings and taking flight in a pure black void. Its iridescent blue-green tail feathers catch a warm coral-orange rim light. Tiny glowing orange particles and fine digital light fragments drift around it like dust. Shallow depth of field, anamorphic lens, high contrast, deep blacks, film grain, bird off-center to the right.",
+    },
+    {
+        "slug": "lab-pipeline",
+        "title": "Light through the pipeline",
+        "model": "Seedance 2.5 via Higgsfield",
+        "prompt": "Abstract macro shot: thin streams of coral-orange light flow through a dark lattice of sharp black glass triangles, like data moving through a pipeline. Slow dolly forward, volumetric haze, deep black background, high contrast, glossy reflections, cinematic.",
+    },
+    {
+        "slug": "lab-screens",
+        "title": "Ten years of screens",
+        "model": "Seedance 2.5 via Higgsfield",
+        "prompt": "Dozens of small floating vintage screens and film frames drift slowly through black space, each glowing with soft abstract coral-orange and warm white light, no readable content. Gentle parallax, slow camera drift, shallow depth of field, bokeh, film grain, moody, nostalgic.",
+    },
+    {
+        "slug": "lab-obsidian",
+        "title": "Obsidian triangles",
+        "model": "Seedance 2.5 via Higgsfield",
+        "prompt": "Large shards of black obsidian glass shaped like triangles rotate slowly in darkness, their edges lit by a thin coral-orange rim light, soft smoke drifting behind. Very slow motion, centered composition, deep blacks, high contrast, premium cinematic look.",
+    },
+]
+
 @app.route('/robots.txt')
 def robots():
     return send_from_directory('static', 'robots.txt')
@@ -52,7 +86,7 @@ def redirect_to_www():
 
 @app.route("/")
 def index():
-    return render_template("index.html", current_year=datetime.now().year)
+    return render_template("index.html", lab_clips=LAB_CLIPS)
 
 @app.route("/projects")
 def previous():

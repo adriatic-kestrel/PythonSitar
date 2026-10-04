@@ -1,131 +1,129 @@
 {% extends 'base.html' %}
+{% block title %}Work{% endblock %}
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/projects.css') }}">
 
-<section class="dark-divider-medium">
-  <h2>AI &amp; Automation Work</h2>
-</section>
-<div class="slider-track">
-  <h1>Magpie</h1>
-</div>
-<div class="bio">
-  <div class="video-embed">
-    <iframe src="https://www.youtube.com/embed/DvFwb21lMrQ" title="Magpie Video idealo innovation week 2026" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<header class="page-hero">
+  <div class="page-hero-media" aria-hidden="true">
+    <video muted loop playsinline autoplay preload="auto"
+           poster="{{ url_for('static', filename='video/lab-pipeline.jpg') }}">
+      <source src="{{ url_for('static', filename='video/lab-pipeline.mp4') }}" type="video/mp4">
+    </video>
   </div>
-  <p>Magpie is an <strong>AI-powered content production system</strong> built in <strong>Python</strong>, HTML, and Typescript at <a href="https://www.idealo.de/" target="_blank" rel="noopener"><strong>idealo</strong></a>. It automates the <strong>full pipeline</strong> from data to publishable creative, i.e. scraping product offers, rendering on-brand assets, and generating <strong>video content at scale</strong> across multiple European markets.</p>
-  <h4>Magpie Picture</h4>
-  <p>Renders daily product offers into <strong>ready-to-post social creatives</strong> for <strong>Meta and TikTok</strong>. Live across idealo.it, idealo.fr, idealo.at, and idealo.co.uk. <strong>~200 assets generated per month</strong> with <strong>no manual intervention</strong>.</p>
-
-  <h4>Magpie Video</h4>
-  <p>Generates <strong>on-brand AI video content at scale</strong> — <strong>no prompt engineering required</strong>. Adopted in <a href="https://www.idealo.de/" target="_blank" rel="noopener">idealo.de</a>. Reached the semifinals of <a href="https://www.idealo.de/" target="_blank" rel="noopener">idealo</a>'s <strong>AI Innovation Weeks</strong>.</p>
-</div>
-<div class="slider-track">
-  <h1>ALIX</h1>
-</div>
-  <div class="bio">
-  
-  <div class="video-embed">
-    <iframe src="https://www.youtube.com/embed/hEjxNdq0Dvk" title="Alix Demo idealo innovation week 2026" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-  <p><strong>AI-powered legal compliance assistant.</strong> Built to help <strong>marketing teams</strong> check creative output against <strong>compliance requirements</strong>. <strong>Won first place</strong> (impact category) at <a href="https://www.idealo.de/" target="_blank" rel="noopener">idealo</a>'s <strong>AI Innovation Weeks</strong>.</p>
-</div>
+  <div class="page-hero-copy">
+    <h1 class="page-title">Work</h1>
+    <p class="hero-lede">AI systems that ship real creative, and the ten years of content making that taught me what good looks like.</p>
+    <nav class="jump" aria-label="On this page">
+      <a href="#magpie">Magpie</a>
+      <a href="#alix">ALIX</a>
+      <a href="#barbaroffa">Barbaroffa</a>
+      <a href="#courses">Courses</a>
+    </nav>
   </div>
+</header>
 
-
-<section class="dark-divider-medium">
-  <h2>Content &amp; Audience</h2>
-</section>
-
-<div class="img-wrapper">
-  <img src="/static/pictures/barbaroffa.png" alt="Barbaroffa original logo" width="500">
+<div class="band-light">
+<article class="case" id="magpie" aria-labelledby="magpie-title">
+  <div class="case-media">
+    <div class="yt" data-yt="DvFwb21lMrQ">
+      <img src="https://i.ytimg.com/vi/DvFwb21lMrQ/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+      <button type="button" class="yt-play">Play the Magpie Video demo</button>
+    </div>
   </div>
-  <div class="bio">
-  <p>
-    Active from 2014 to 2025, <strong>Barbaroffa</strong> was a cross-platform content project spanning 
-    <a href="https://www.youtube.com/@barbaroffa" target="_blank" rel="noopener noreferrer"><strong>YouTube</strong></a> (77k subscribers), 
-    <a href="https://www.instagram.com/barbaroffa" target="_blank" rel="noopener noreferrer"><strong>Instagram</strong></a> (20k followers), and 
-    <a href="https://www.tiktok.com/@barbaroffa" target="_blank" rel="noopener noreferrer"><strong>TikTok</strong></a> (10k followers).
-  </p>
+  <div class="case-text">
+    <p class="case-meta">idealo &middot; Python, HTML, TypeScript</p>
+    <h2 id="magpie-title" class="section-title">Magpie</h2>
+    <p>An <strong>AI content production system</strong>. It runs the whole pipeline from data to publishable creative: it scrapes product offers, renders on-brand assets and generates video at scale for several European markets.</p>
+    <dl class="facts">
+      <div>
+        <dt>Magpie Picture</dt>
+        <dd>Turns daily product offers into ready-to-post creatives for Meta and TikTok. Live on idealo.it, idealo.fr, idealo.at and idealo.co.uk, producing around <strong>200 assets a month with no manual steps</strong>.</dd>
+      </div>
+      <div>
+        <dt>Magpie Video</dt>
+        <dd>Generates on-brand AI video at scale, with <strong>no prompt engineering</strong> needed from the people using it. Adopted on idealo.de and a semifinalist at idealo's AI Innovation Weeks.</dd>
+      </div>
+    </dl>
+  </div>
+</article>
 
-  <p>
-    Initially launched with a focus on gaming, the project evolved into a channel for <strong>current affairs commentary</strong>, 
-    <strong>international communication</strong>, and <strong>language content for Italian audiences</strong>.
-  </p>
-
-  <p>
-    The content had a strong generalist orientation, combining global narratives with culturally tailored storytelling. 
-    Over <strong>15 million organic views</strong> were generated in the Italian market across more than 900 published pieces.
-  </p>
-
-  <p>
-    The project was monetized through multiple streams, including 
-    <strong>Amazon affiliate marketing</strong></a>, 
-    <strong>brand collaborations</strong>, <strong>consulting services</strong>, and 
-    <a href="https://www.udemy.com/user/arnaldo-pangia/" target="_blank" rel="noopener noreferrer"><strong>Udemy video courses</strong></a>.
-  </p>
-
-  <p>
-    Barbaroffa functioned as an independent media lab—testing editorial formats, iterating across channels, and building 
-    community without paid promotion. The project demonstrated agility in <strong>content strategy</strong>, 
-    <strong>cross-platform adaptation</strong>, and <strong>audience development</strong>.
-  </p>
+<article class="case case-flip" id="alix" aria-labelledby="alix-title">
+  <div class="case-media">
+    <div class="yt" data-yt="hEjxNdq0Dvk">
+      <img src="https://i.ytimg.com/vi/hEjxNdq0Dvk/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+      <button type="button" class="yt-play">Play the ALIX demo</button>
+    </div>
+  </div>
+  <div class="case-text">
+    <p class="case-meta">idealo &middot; AI Innovation Weeks</p>
+    <h2 id="alix-title" class="section-title">ALIX</h2>
+    <p>An <strong>AI legal compliance assistant</strong> for marketing teams. It checks creative output against compliance requirements before anything goes live, so legal review stops being the bottleneck.</p>
+    <p class="award">First place, impact category, idealo AI Innovation Weeks</p>
+  </div>
+</article>
 </div>
-<section class="dark-divider-medium">
-  
-  <h2>Selected Mentions</h2>
+
+<section class="story" id="barbaroffa" aria-labelledby="barbaroffa-title">
+  <div class="story-media" aria-hidden="true">
+    <video muted loop playsinline preload="none" data-autoplay
+           poster="{{ url_for('static', filename='video/lab-screens.jpg') }}">
+      <source src="{{ url_for('static', filename='video/lab-screens.mp4') }}" type="video/mp4">
+    </video>
+  </div>
+  <div class="story-inner">
+    <h2 id="barbaroffa-title" class="sr-only">Barbaroffa</h2>
+    <img class="story-logo" src="{{ url_for('static', filename='pictures/barbaroffa.png') }}" alt="Barbaroffa" width="1472" height="269" loading="lazy">
+    <p class="story-years">2014 to 2025</p>
+    <ul class="numbers">
+      <li><strong>15M+</strong> organic views</li>
+      <li><strong>900+</strong> published pieces</li>
+      <li><strong>17K+</strong> course students</li>
+      <li><strong>0</strong> paid promotion</li>
+    </ul>
+    <div class="story-text">
+      <p>Barbaroffa was my independent media lab, spread across <a href="https://www.youtube.com/@barbaroffa" target="_blank" rel="noopener">YouTube</a> (77K subscribers), <a href="https://www.instagram.com/barbaroffa" target="_blank" rel="noopener">Instagram</a> (20K) and <a href="https://www.tiktok.com/@barbaroffa" target="_blank" rel="noopener">TikTok</a> (10K).</p>
+      <p>It started as a gaming channel and grew into current affairs commentary, international communication and language content for Italian audiences. Along the way I tested formats, adapted them across platforms and built a community without spending on ads.</p>
+      <p>It paid for itself through Amazon affiliate links, brand collaborations, consulting and <a href="https://www.udemy.com/user/arnaldo-pangia/" target="_blank" rel="noopener">Udemy courses</a>.</p>
+    </div>
+    <div class="mentions">
+      <h3 class="mentions-title">Mentioned in</h3>
+      <ul class="logo-row">
+        <li><a href="https://www.open.online/2019/02/05/asmr-cosi-brividi-e-sussurri-hanno-conquistato-youtube/" target="_blank" rel="noopener noreferrer"><img src="{{ url_for('static', filename='pictures/open.png') }}" alt="Open" width="500" height="500" loading="lazy"></a></li>
+        <li><a href="https://it.mashable.com/entertainment/994/dovremmo-smettere-di-condividere-io-sono-giorgia-questo-video-spiega-perche" target="_blank" rel="noopener noreferrer"><img src="{{ url_for('static', filename='pictures/mashable.png') }}" alt="Mashable Italia" width="500" height="500" loading="lazy"></a></li>
+        <li><a href="https://edulia.it/docenti/arnaldo-pangia/" target="_blank" rel="noopener noreferrer"><img src="{{ url_for('static', filename='pictures/edulia.png') }}" alt="Edulia" width="500" height="500" loading="lazy"></a></li>
+      </ul>
+    </div>
+  </div>
 </section>
-<div class="slider-track">
-  <a href="https://www.open.online/2019/02/05/asmr-cosi-brividi-e-sussurri-hanno-conquistato-youtube/" target="_blank" rel="noopener noreferrer">
-    <img src="{{ url_for('static', filename='pictures/open.png') }}" alt="Open logo">
-  </a>
-  <a href="https://it.mashable.com/entertainment/994/dovremmo-smettere-di-condividere-io-sono-giorgia-questo-video-spiega-perche" target="_blank" rel="noopener noreferrer">
-    <img src="{{ url_for('static', filename='pictures/mashable.png') }}" alt="Mashable logo">
-  </a>
-<a href="https://edulia.it/docenti/arnaldo-pangia/" target="_blank" rel="noopener noreferrer">
-    <img src="{{ url_for('static', filename='pictures/edulia.png') }}" alt="Edulia logo">
-  </a>
-</div>
 
-</div>
-
-<div class="bio" id="courses">
-  <h2>On-demand Courses</h2>
-
-  <p>
-    A series of <strong>bestselling Udemy courses</strong> focused on <strong>applied AI</strong>, <strong>language acquisition</strong>, and <strong>creator economy strategy</strong>.
-    The curriculum combines hands-on use cases with a clear, accessible teaching style.
-  </p>
-
-  <p>
-    Topics include <strong>prompt engineering with ChatGPT</strong>, <strong>conversational English for Italian learners</strong>, and <strong>scalable content production</strong> on platforms like YouTube.
-  </p>
-
-  <p>
-    The courses generated <strong>17,000+ enrollments</strong> and consistently high ratings, with no paid promotion.
-    They reflect a <strong>lean, independent approach</strong> to educational content—practical, focused, and built for immediate value.
-  </p>
-</div>
-<section class="dark-divider-medium">
-  
-  <h2>Best-selling Courses</h2>
+<section class="courses" id="courses" aria-labelledby="courses-title">
+  <div class="section-head">
+    <h2 id="courses-title" class="section-title">Courses</h2>
+    <p class="section-note">Bestselling Udemy courses on applied AI, language learning and the creator economy. Practical, hands-on and grown without paid promotion to more than 17,000 enrollments.</p>
+  </div>
+  <ul class="course-list">
+    <li>
+      <a href="https://www.udemy.com/course/corso-intelligenza-artificiale-come-usare-chatgpt/?referralCode=27928496F1E6C6EFB45B" target="_blank" rel="noopener noreferrer">
+        <img src="{{ url_for('static', filename='pictures/chatgpt.png') }}" alt="" width="500" height="500" loading="lazy">
+        <span>Prompt engineering with ChatGPT</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.udemy.com/course/corso-inglese-online/?referralCode=059AABB5F048E5B176F8" target="_blank" rel="noopener noreferrer">
+        <img src="{{ url_for('static', filename='pictures/english.png') }}" alt="" width="500" height="500" loading="lazy">
+        <span>Conversational English for Italian speakers</span>
+      </a>
+    </li>
+    <li>
+      <a href="https://www.udemy.com/course/come-diventare-youtuber/?referralCode=9790FFBAB1D71DCC9FE7" target="_blank" rel="noopener noreferrer">
+        <img src="{{ url_for('static', filename='pictures/youtube.png') }}" alt="" width="500" height="500" loading="lazy">
+        <span>Growing a YouTube channel</span>
+      </a>
+    </li>
+  </ul>
 </section>
-<div class="slider-track">
-  <a href="https://www.udemy.com/course/corso-intelligenza-artificiale-come-usare-chatgpt/?referralCode=27928496F1E6C6EFB45B" target="_blank" rel="noopener noreferrer">
-    <img src="{{ url_for('static', filename='pictures/chatgpt.png') }}" alt="ChatGPT logo">
-  </a>
-</a>
-<a href="https://www.udemy.com/course/corso-inglese-online/?referralCode=059AABB5F048E5B176F8" target="_blank" rel="noopener noreferrer">
-    <img src="{{ url_for('static', filename='pictures/english.png') }}" alt="English for italian speakers">
-  </a>
-  <a href="https://www.udemy.com/course/come-diventare-youtuber/?referralCode=9790FFBAB1D71DCC9FE7" target="_blank" rel="noopener noreferrer">
-    <img src="{{ url_for('static', filename='pictures/youtube.png') }}" alt="YouTube logo">
-    </a>
-</div>
 
-<section class="dark-divider-medium">
-  <h2>GitHub</h2>
+<section class="closing">
+  <p>More code lives on <a href="https://github.com/adriatic-kestrel" target="_blank" rel="noopener">GitHub</a>. Want to build something together? <a href="/#contact">Get in touch</a>.</p>
 </section>
-<div class="bio" id="github">
-  <p>Browse my code on <a href="https://github.com/adriatic-kestrel" target="_blank" rel="noopener"><strong>GitHub</strong></a>.</p>
-</div>
+
 {% endblock %}

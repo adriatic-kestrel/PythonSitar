@@ -1,14 +1,15 @@
 {% extends 'base.html' %}
 
+{% block title %}Wacky code{% endblock %}
 {% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/wacky.css') }}">
 {% endblock %}
 
 {% block content %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/wacky.css') }}">
-<div class = "description">
+<div class="description">
   <h1>Wacky Code</h1>
   <p>To build efficiently, you first have to know how to waste perfectly.</p>
-  <p>These are <b>high-effort</b>, <b>low-impact apps</b> — built in Python, Flask, JavaScript, HTML, and CSS. <b>Full-stack</b>, because apparently that's what it takes to make a phrasal verb generator no one asked for.</p>
+  <p>These are <b>high-effort</b>, <b>low-impact apps</b>, built in Python, Flask, JavaScript, HTML, and CSS. <b>Full-stack</b>, because apparently that's what it takes to make a phrasal verb generator no one asked for.</p>
   </div>
 <div class="wacky-menu">
   <a href="{{ url_for('phrasal_verb') }}" class="wacky-menu-button">
@@ -31,7 +32,4 @@
     <p>Old references for a crazy year.</p>
   </a>
 </div>
-</body>
-</html> 
-
 {% endblock %}

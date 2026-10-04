@@ -1,31 +1,34 @@
 # Arnaldo Pangia
 
-> Berlin-based brand manager and AI creative producer. Builds production-grade AI tools for marketing teams.
+> Berlin-based freelance AI Creative Producer and consultant, also AI Creative Producer at Kleinanzeigen. Builds production-grade generative AI pipelines for images, video and brand assets.
 
 ## About
 
-Arnaldo Pangia is a brand manager and AI creative producer based in Berlin. He designs and ships automation pipelines and AI tools for marketing, combining creative strategy with hands-on engineering in Python, Flask, and generative AI.
+Arnaldo Pangia is an AI Creative Producer based in Berlin. He works freelance, consulting teams on AI creative production, and is also AI Creative Producer at Kleinanzeigen. He designs and ships generative AI and automation pipelines for creative teams, combining creative strategy with hands-on engineering in Python, Flask and generative video and image models (hosted models as well as local ComfyUI workflows with Wan 2.2 and HunyuanVideo).
 
-Previously spent ten years building a 100K+ audience (Barbaroffa) from scratch across YouTube, Instagram, and TikTok — 15M organic views, 17K course students, no paid promotion.
+Before Kleinanzeigen he spent five years at idealo, where he built Magpie and worked on ALIX. Before that he spent ten years building a 100K+ audience (Barbaroffa) from scratch across YouTube, Instagram and TikTok: 15M organic views and 17K course students, with no paid promotion.
 
-## AI & Automation Work
+The video loops on arnaldopangia.com are AI-generated from text prompts; the prompts are shown in the Lab section of the homepage.
 
-- [Magpie](https://www.arnaldopangia.com/projects): AI-powered content production system built at idealo. Automates the full pipeline from product data to publishable social creatives and video content at scale across five European markets.
-- [ALIX](https://www.arnaldopangia.com/projects): AI-powered legal compliance assistant for marketing teams. Won first place (impact category) at idealo's AI Innovation Weeks.
+## AI and automation work
 
-## Content & Audience
+- [Magpie](https://www.arnaldopangia.com/projects#magpie): AI content production system built at idealo. Automates the full pipeline from product data to publishable social creatives (Magpie Picture, around 200 assets a month across four markets) and on-brand AI video (Magpie Video, adopted on idealo.de, AI Innovation Weeks semifinalist).
+- [ALIX](https://www.arnaldopangia.com/projects#alix): AI legal compliance assistant for marketing teams. Won first place (impact category) at idealo's AI Innovation Weeks.
+- [Lab](https://www.arnaldopangia.com/#lab): AI-generated video loops with the prompts that made them.
 
-- [Barbaroffa](https://www.youtube.com/@barbaroffa): Cross-platform content project (2014–2025). 77K YouTube subscribers, 20K Instagram followers, 10K TikTok followers. 15M+ organic views in the Italian market.
-- [Udemy Courses](https://www.udemy.com/user/arnaldo-pangia/): Bestselling courses on AI, prompt engineering, English for Italian speakers, and YouTube strategy. 17,000+ enrollments.
+## Content and audience
 
-## Wacky Code
+- [Barbaroffa](https://www.arnaldopangia.com/projects#barbaroffa): Cross-platform content project (2014 to 2025). 77K YouTube subscribers, 20K Instagram followers, 10K TikTok followers. 15M+ organic views in the Italian market.
+- [Udemy courses](https://www.udemy.com/user/arnaldo-pangia/): Bestselling courses on AI and prompt engineering, English for Italian speakers, and YouTube strategy. 17,000+ enrollments.
 
-- [Wacky Code](https://www.arnaldopangia.com/wacky): A collection of high-effort, low-impact Flask apps built for fun — phrasal verb generator, HR rejection generator, Bürgeramt simulator, Seinfeld opening generator.
+## Wacky code
+
+- [Wacky Code](https://www.arnaldopangia.com/wacky): High-effort, low-impact Flask apps built for fun: a phrasal verb generator, an HR rejection generator, a Bürgeramt simulator and a Seinfeld opening generator.
 
 ## Links
 
 - Homepage: https://www.arnaldopangia.com
-- Portfolio: https://www.arnaldopangia.com/projects
+- Work: https://www.arnaldopangia.com/projects
 - GitHub: https://github.com/adriatic-kestrel
 - LinkedIn: https://www.linkedin.com/in/arnaldopangia/
 - YouTube: https://www.youtube.com/@arnaldopangia

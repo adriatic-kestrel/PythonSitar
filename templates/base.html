@@ -1,123 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
 
-    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
-    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
-    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
-    
+  <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+  <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+  <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
-    <title>Arnaldo Pangia - Brand Manager, AI Creative Producer, Berlin</title>
-    <meta name="description" content="Berlin-based brand manager and AI creative producer. Built Magpie Picture, Magpie Video, and ALIX at idealo. Shipping production-grade AI tools for marketing teams.">
-    <meta name="author" content="Arnaldo Pangia">
-    <meta name="robots" content="index, follow">
+  {% if false %}{% block title %}{% endblock %}{% endif %}
+  {% set page_title = self.title() | trim %}
+  <title>{% if page_title %}{{ page_title }} | {% endif %}Arnaldo Pangia, AI Creative Producer in Berlin</title>
+  <meta name="description" content="Arnaldo Pangia is a freelance AI Creative Producer and consultant in Berlin, also in-house at Kleinanzeigen. He builds generative AI pipelines for images, video and brand assets, including Magpie and ALIX at idealo.">
+  <meta name="author" content="Arnaldo Pangia">
+  <meta name="robots" content="index, follow">
 
-    <meta property="og:title" content="Arnaldo Pangia — Brand Manager, AI Creative Producer, Berlin">
-    <meta property="og:description" content="Berlin-based brand manager and AI creative producer. Built Magpie Picture, Magpie Video, and ALIX at idealo. Shipping production-grade AI tools for marketing teams.">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://www.arnaldopangia.com">
-    <meta property="og:image" content="https://www.arnaldopangia.com/static/pictures/preview.jpg">
-    <meta property="og:image:width" content="630" />
-    <meta property="og:image:height" content="630" />
-    <meta property="og:image:type" content="image/jpeg" />
-  
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Arnaldo Pangia - Marketing tech with a product mindset">
-    <meta name="twitter:description" content="A tech-minded space by Arnaldo Pangia for product, automation, and content experiments.">
-    <meta name="twitter:image" content="https://www.arnaldopangia.com/static/pictures/preview.jpg">
-  
-    <meta property="og:image:alt" content="Portrait of Arnaldo Pangia with tagline about digital projects and product thinking">
-    <meta name="twitter:image:alt" content="Portrait of Arnaldo Pangia with tagline about digital projects and product thinking">
+  <meta property="og:title" content="Arnaldo Pangia, AI Creative Producer">
+  <meta property="og:description" content="Berlin-based AI Creative Producer, freelance and at Kleinanzeigen. Builder of Magpie (AI content and video at scale) and ALIX (AI compliance assistant).">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.arnaldopangia.com{{ request.path }}">
+  <meta property="og:image" content="https://www.arnaldopangia.com/static/pictures/preview.jpg">
+  <meta property="og:image:width" content="630">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:type" content="image/jpeg">
+  <meta property="og:image:alt" content="Portrait of Arnaldo Pangia">
 
-    <!-- Canonical tag -->
-    <link rel="canonical" href="https://www.arnaldopangia.com">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Arnaldo Pangia, AI Creative Producer">
+  <meta name="twitter:description" content="Generative AI pipelines for images, video and brand assets. Berlin.">
+  <meta name="twitter:image" content="https://www.arnaldopangia.com/static/pictures/preview.jpg">
+  <meta name="twitter:image:alt" content="Portrait of Arnaldo Pangia">
 
-    <!-- JSON-LD Schema -->
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Arnaldo Pangia",
-      "jobTitle": "Brand Manager, AI Creative Producer",
-      "url": "https://www.arnaldopangia.com",
-      "sameAs": [
-        "https://www.linkedin.com/in/arnaldopangia/",
-        "https://www.youtube.com/@arnaldopangia",
-        "https://github.com/adriatic-kestrel",
-        "https://arnaldopangia.substack.com"
-      ],
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Berlin",
-        "addressCountry": "DE"
-      },
-      "knowsAbout": [
-        "AI creative production",
-        "marketing automation",
-        "brand management",
-        "Python",
-        "Flask",
-        "generative AI",
-        "content strategy"
-      ],
-      "description": "Berlin-based brand manager and AI creative producer. Built Magpie Picture, Magpie Video, and ALIX — production-grade AI tools for marketing teams — at idealo internet GmbH."
-    }
-    </script>
+  <link rel="canonical" href="https://www.arnaldopangia.com{{ request.path }}">
 
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <!-- Bootstrap 5.3 JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Arnaldo Pangia",
+    "jobTitle": "AI Creative Producer",
+    "worksFor": { "@type": "Organization", "name": "Kleinanzeigen" },
+    "url": "https://www.arnaldopangia.com",
+    "sameAs": [
+      "https://www.linkedin.com/in/arnaldopangia/",
+      "https://www.youtube.com/@arnaldopangia",
+      "https://github.com/adriatic-kestrel",
+      "https://arnaldopangia.substack.com"
+    ],
+    "address": { "@type": "PostalAddress", "addressLocality": "Berlin", "addressCountry": "DE" },
+    "knowsAbout": [
+      "AI creative production",
+      "generative AI video",
+      "AI image generation",
+      "creative automation pipelines",
+      "ComfyUI",
+      "Python",
+      "Flask",
+      "brand management",
+      "content strategy"
+    ],
+    "description": "Berlin-based freelance AI Creative Producer and consultant, also AI Creative Producer at Kleinanzeigen. Built Magpie Picture, Magpie Video and ALIX, production-grade AI tools for marketing teams, at idealo internet GmbH."
+  }
+  </script>
 
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/components.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/contentpage.css') }}">
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preload" href="{{ url_for('static', filename='fonts/archivo-latin-wdth-normal.woff2') }}" as="font" type="font/woff2" crossorigin>
+
+  {% if request.endpoint in ['wacky', 'phrasal_verb', 'burgeramt', 'hrrejection', 'seinfeld_opening'] %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+  {% endif %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  {% block head %}{% endblock %}
 </head>
 
-<body>
-<script>
-  function toggleMenu() {
-    const navLinks = document.getElementById("nav-links");
-    navLinks.classList.toggle("show");
-  }
-</script>
+<body class="page-{{ request.endpoint or 'none' }}">
+<a class="skip-link" href="#main">Skip to content</a>
 
 {% set path = request.path %}
-<nav class="nav-bar">
-  <div class="nav-container">
-    <div class="nav-left">
-      <a href="/" class="logo">
-        <img src="/static/pictures/logowhite.svg" alt="Logo">
-      </a>
+<header class="nav-bar" id="top">
+  <nav class="nav-container" aria-label="Main">
+    <a href="/" class="logo" aria-label="Arnaldo Pangia, home">
+      <img src="{{ url_for('static', filename='pictures/logowhite.svg') }}" alt="" width="122" height="40">
+    </a>
+    <button class="hamburger" type="button" aria-expanded="false" aria-controls="nav-links">
+      <span class="sr-only">Menu</span>
+      <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path d="M3 7h18M3 12h18M3 17h18" stroke="currentColor" stroke-width="2" fill="none"/></svg>
+    </button>
+    <div id="nav-links" class="nav-links">
+      <a href="/projects" {% if path == '/projects' %}aria-current="page"{% endif %}>Work</a>
+      <a href="/#lab">Lab</a>
+      <a href="/wacky" {% if path == '/wacky' %}aria-current="page"{% endif %}>Wacky code</a>
+      <a href="https://arnaldopangia.substack.com/" target="_blank" rel="noopener noreferrer">Substack</a>
+      <a href="/#contact" class="nav-cta">Get in touch</a>
     </div>
-    <div class="nav-right">
-<div id="nav-links" class="nav-links">
-    <a href="https://arnaldopangia.substack.com/" target="_blank" rel="noopener noreferrer" class="{% if path == '/webapps' %}active{% endif %}">Substack</a>
-    <a href="/#contacts">Contacts</a>
-    <a href="/projects" class="{% if path == '/projects' %}active{% endif %}">Portfolio</a>
-    <a href="/wacky" class="{% if path == '/wacky' %}active{% endif %}">Wacky Code</a>
-</div>
-      <button class="hamburger" onclick="toggleMenu()">☰</button>
-    </div>
-  </div>
-</nav>
-<main> 
-    {% block content %}
-    {% endblock %}
+  </nav>
+</header>
+
+<main id="main">
+  {% block content %}
+  {% endblock %}
 </main>
 
-
-
-  <footer class="footer">
-    <p>Coded and designed in {{ current_year }} by Arnaldo Pangia <br> Built with <strong>Python</strong>, <strong>Flask</strong> & <strong>CSS</strong></p>
-  </footer>
-  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+<footer class="footer">
+  <div class="footer-inner">
+    <p>Designed and coded by Arnaldo Pangia with Claude Code, {{ current_year }}. Built with Python and Flask. Every video loop on this site was generated with AI.</p>
+    <p class="footer-motto"><em>Ingenio ex inopia.</em></p>
+  </div>
+</footer>
+<script src="{{ url_for('static', filename='js/main.js') }}" defer></script>
 </body>
 </html>

@@ -4,3 +4,4 @@ __pycache__/
 .DS_Store
 static/.DS_Store
 static/pictures/.DS_Store
+static/video/*.raw.mp4
