@@ -610,7 +610,8 @@ strong { font-weight: 650; color: #fff; }
 .page-phrasal_verb main,
 .page-burgeramt main,
 .page-hrrejection main,
-.page-seinfeld_opening main {
+.page-seinfeld_opening main,
+.page-ai_calculator main {
   padding: calc(var(--nav-h) + 56px) var(--gutter) 96px;
   max-width: 992px; margin: 0 auto; width: 100%;
 }

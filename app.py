@@ -88,6 +88,7 @@ def sitemap():
         {'loc': f'{base_url}/burgeramt', 'changefreq': 'weekly', 'priority': 0.3},
         {'loc': f'{base_url}/hrrejection', 'changefreq': 'weekly', 'priority': 0.3},
         {'loc': f'{base_url}/seinfeld', 'changefreq': 'weekly', 'priority': 0.3},
+        {'loc': f'{base_url}/ai-calculator', 'changefreq': 'monthly', 'priority': 0.3},
     ]
     return render_template('sitemap.xml', urls=urls), 200, {'Content-Type': 'application/xml'}
 
@@ -159,6 +160,10 @@ def hrrejection():
             "sent": datetime.now().strftime("%a %d %b %Y, %H:%M"),
         },
     )
+
+@app.route("/ai-calculator")
+def ai_calculator():
+    return render_template("ai_calculator.html")
 
 @app.route("/seinfeld")
 def seinfeld_opening():

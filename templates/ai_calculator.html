@@ -1,0 +1,286 @@
+{% extends 'base.html' %}
+
+{% block title %}AI-enhanced calculator{% endblock %}
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/wacky.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="calc-intro">
+  <h1>AI-enhanced calculator</h1>
+  <p>Arithmetic, now with reasoning. Every answer is carefully considered, beautifully worded and expensive.</p>
+</div>
+
+<div class="calc" id="calc">
+  <div class="calc-screen">
+    <p class="calc-expr" id="calc-expr" aria-label="Expression">0</p>
+    <div class="calc-answer" id="calc-answer" aria-live="polite">
+      <p class="calc-hint">What are you going to calculate today?</p>
+    </div>
+  </div>
+
+  <div class="calc-meter" aria-label="Usage">
+    <p><span>Tokens</span> <b id="calc-tokens">0</b></p>
+    <p><span>Cost</span> <b id="calc-cost">0.00 EUR</b></p>
+  </div>
+
+  <div class="calc-keys">
+    <button type="button" data-key="C" class="is-fn">C</button>
+    <button type="button" data-key="±" class="is-fn">±</button>
+    <button type="button" data-key="%" class="is-fn">%</button>
+    <button type="button" data-key="÷" class="is-op">÷</button>
+    <button type="button" data-key="7">7</button>
+    <button type="button" data-key="8">8</button>
+    <button type="button" data-key="9">9</button>
+    <button type="button" data-key="×" class="is-op">×</button>
+    <button type="button" data-key="4">4</button>
+    <button type="button" data-key="5">5</button>
+    <button type="button" data-key="6">6</button>
+    <button type="button" data-key="−" class="is-op">−</button>
+    <button type="button" data-key="1">1</button>
+    <button type="button" data-key="2">2</button>
+    <button type="button" data-key="3">3</button>
+    <button type="button" data-key="+" class="is-op">+</button>
+    <button type="button" data-key="0" class="is-wide">0</button>
+    <button type="button" data-key=".">.</button>
+    <button type="button" data-key="=" class="is-eq">=</button>
+  </div>
+</div>
+
+<div class="calc-actions">
+  <button class="btn btn-solid" type="button" id="calc-again">Calculate again</button>
+  <a class="btn btn-ghost" href="{{ url_for('wacky') }}">Back to Wacky Code</a>
+</div>
+
+<script>
+(function () {
+  var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Timing knobs.
+  var TYPE_MS = 18;       // per character of the AI's prose
+  var THINK_MS = 2000;    // how long it "thinks" before answering
+  var VERB_MS = 1000;     // a new thinking verb every second
+
+  // Parody copy: on this page the house "no em dashes" rule is deliberately off.
+  var OPENERS = [
+    "Hello Arnaldo! That's a really smart question — and honestly, not an obvious one. Let me calculate the result for you.",
+    "Great question! Arithmetic isn't just about numbers — it's about the journey those numbers take together. Let's dive in.",
+    "Absolutely! Before we begin, it's important to note that mathematics is a rich and multifaceted discipline. Let me break this down step by step.",
+    "What a fascinating operation! This isn't just a sum — it's a testament to your curiosity. Let's delve into it together.",
+    "Certainly, Arnaldo! I understand that numbers can feel overwhelming at times. You're not alone — and that's okay. Let me handle this for you.",
+    "You're absolutely right to ask. In today's fast-paced world, calculating isn't a luxury — it's a necessity. Here's my thinking.",
+    "Ah, the timeless question every great mind eventually asks. Let me unpack it carefully, thoughtfully and, above all, responsibly.",
+    "Thank you for trusting me with this. It's not just an operation — it's a conversation between you and the numbers. Let's explore it.",
+    "Let's be clear: this is a nuanced request, and nuance matters. I'll approach it with rigor, empathy and a holistic perspective.",
+    "Hello Arnaldo! I love where your head is at. Let's navigate the complex, ever-evolving landscape of this calculation together."
+  ];
+  var CLOSINGS = [
+    "The result of the operation is {r}. Do you want me to calculate some more?",
+    "In summary, the result is {r}. It's not just a number — it's a milestone. Would you like me to calculate something else?",
+    "Here's the bottom line: {r}. I hope this helps! Let me know if you'd like me to go deeper.",
+    "After careful consideration, the answer is {r}. Not \u201croughly\u201d, not \u201cabout\u201d — exactly {r}. Shall we keep going?",
+    "And there you have it: {r}. This is exactly the kind of question that moves the needle. Want another one?",
+    "The result of the operation is {r}. Would you like me to turn this into a slide deck, a LinkedIn post or a haiku?",
+    "Drumroll, please… {r}! It's not magic — it's mathematics. Do you want me to calculate some more?",
+    "Final answer: {r}. As always, double-check important results with a qualified professional. Shall I calculate something else?",
+    "Great news — the answer is {r}! You didn't just ask a question; you started a conversation. Do you want me to calculate some more?",
+    "The answer is {r}. Let me know if you'd like it in Roman numerals, binary or interpretive dance."
+  ];
+  var UNDEFINED = "Dividing by zero isn't an error — it's an invitation. The result is undefined, and honestly? So is the future. Do you want me to calculate some more?";
+  var HINTS = [
+    "What are you going to calculate today?",
+    "The power of tomorrow, today.",
+    "Making the world a better place, one operation at a time.",
+    "Numbers. Reimagined.",
+    "Where do you want to add today?",
+    "Think different. Then press =.",
+    "Empowering every number on the planet to achieve more.",
+    "Arithmetic, reinvented for the enterprise.",
+    "Your numbers. Our passion.",
+    "Calculating the future, together.",
+    "Because every digit deserves a voice.",
+    "Synergy starts with a sum.",
+    "Disrupting division since this morning.",
+    "Built for the way you multiply.",
+    "Plus. Minus. Possibilities.",
+    "Next-generation subtraction, powered by AI.",
+    "Just add numbers.",
+    "Trusted by digits worldwide.",
+    "Your journey to the right answer starts here.",
+    "Scalable solutions for a scalable world."
+  ];
+  function pick(list) { return list[Math.floor(Math.random() * list.length)]; }
+  var VERBS = [
+    'Thinking', 'Generating', 'Ruminating', 'Calculating', 'Elaborating',
+    'Pondering', 'Cogitating', 'Deliberating', 'Contemplating', 'Synthesizing',
+    'Mulling', 'Noodling', 'Percolating', 'Marinating', 'Brewing',
+    'Crunching', 'Musing', 'Simmering', 'Reticulating', 'Manifesting'
+  ];
+
+  var exprEl = document.getElementById('calc-expr');
+  var answerEl = document.getElementById('calc-answer');
+  var tokensEl = document.getElementById('calc-tokens');
+  var costEl = document.getElementById('calc-cost');
+  var eqBtn = document.querySelector('[data-key="="]');
+
+  var expr = '';
+  var run = 0;            // bumps on every new answer, so an old one stops writing
+  var meterFrame = null;
+
+  /* ---------- arithmetic: a tiny parser, no eval ---------- */
+  function tokenize(s) {
+    var out = [], num = '';
+    for (var i = 0; i < s.length; i++) {
+      var ch = s[i];
+      if (/[0-9.]/.test(ch)) { num += ch; continue; }
+      if (num) { out.push(parseFloat(num)); num = ''; }
+      if (ch === '%') { out[out.length - 1] = out[out.length - 1] / 100; continue; }
+      if (ch === 'n') { num = '-'; continue; }  // unary minus from ±
+      out.push(ch);
+    }
+    if (num && num !== '-') out.push(parseFloat(num));
+    return out;
+  }
+  function evaluate(s) {
+    var t = tokenize(s);
+    if (typeof t[t.length - 1] !== 'number') t.pop();     // ignore a trailing operator
+    if (!t.length) return 0;
+    // first pass: × and ÷
+    var stack = [t[0]];
+    for (var i = 1; i < t.length; i += 2) {
+      var op = t[i], n = t[i + 1];
+      if (op === '×') stack[stack.length - 1] *= n;
+      else if (op === '÷') stack[stack.length - 1] /= n;
+      else stack.push(op, n);
+    }
+    // second pass: + and −
+    var total = stack[0];
+    for (var j = 1; j < stack.length; j += 2) {
+      total = stack[j] === '+' ? total + stack[j + 1] : total - stack[j + 1];
+    }
+    return total;
+  }
+  function format(n) {
+    if (!isFinite(n)) return 'undefined';
+    var r = parseFloat(n.toPrecision(12));
+    return r.toLocaleString('en-US', { maximumFractionDigits: 10 });
+  }
+  function pretty(s) { return (s || '0').replace(/n/g, '−'); }
+
+  /* ---------- input ---------- */
+  function press(key) {
+    var last = expr.slice(-1);
+    if (/[0-9]/.test(key)) expr += key;
+    else if (key === '.') {
+      var current = expr.split(/[+−×÷]/).pop();
+      if (current.indexOf('.') === -1) expr += (current === '' || current === 'n') ? '0.' : '.';
+    }
+    else if ('+−×÷'.indexOf(key) > -1) {
+      if (expr === '') return;
+      expr = /[+−×÷]/.test(last) ? expr.slice(0, -1) + key : expr + key;
+    }
+    else if (key === '%') { if (/[0-9]/.test(last)) expr += '%'; }
+    else if (key === '±') {
+      var m = expr.match(/(n?)([0-9.]*)$/);
+      var start = expr.length - m[0].length;
+      expr = expr.slice(0, start) + (m[1] ? '' : 'n') + m[2];
+    }
+    else if (key === 'C') { expr = ''; stop(); showHint(); resetMeter(); }
+    else if (key === 'Back') expr = expr.slice(0, -1);
+    else if (key === '=') { if (expr) answer(evaluate(expr)); return; }
+    exprEl.textContent = pretty(expr);
+  }
+
+  showHint();
+  document.getElementById('calc-again').addEventListener('click', function () {
+    press('C');
+    document.getElementById('calc').scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  });
+
+  document.querySelectorAll('.calc-keys button').forEach(function (b) {
+    b.addEventListener('click', function () { press(b.dataset.key); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if (e.metaKey || e.ctrlKey || e.altKey) return;
+    var map = { '*': '×', 'x': '×', '/': '÷', '-': '−', '+': '+', 'Enter': '=', '=': '=',
+                'Escape': 'C', 'Backspace': 'Back', ',': '.', '.': '.', '%': '%' };
+    var key = /^[0-9]$/.test(e.key) ? e.key : map[e.key];
+    if (!key) return;
+    e.preventDefault();
+    press(key);
+  });
+
+  /* ---------- the "AI" ---------- */
+  function wait(ms, id) {
+    return new Promise(function (resolve, reject) {
+      setTimeout(function () { id === run ? resolve() : reject(); }, ms);
+    });
+  }
+  function type(el, text, id) {
+    if (reduceMotion) { el.textContent = text; return Promise.resolve(); }
+    var i = 0;
+    return new Promise(function (resolve, reject) {
+      (function next() {
+        if (id !== run) return reject();
+        el.textContent = text.slice(0, ++i);
+        answerEl.scrollTop = answerEl.scrollHeight;
+        if (i < text.length) setTimeout(next, TYPE_MS); else resolve();
+      })();
+    });
+  }
+  function para(cls) {
+    var p = document.createElement('p');
+    if (cls) p.className = cls;
+    answerEl.appendChild(p);
+    return p;
+  }
+  function showHint() {
+    answerEl.innerHTML = '';
+    para('calc-hint').textContent = pick(HINTS);
+  }
+  function stop() { run++; if (meterFrame) cancelAnimationFrame(meterFrame); eqBtn.disabled = false; }
+  function resetMeter() { tokensEl.textContent = '0'; costEl.textContent = '0.00 EUR'; }
+
+  // Tokens race up while the cost climbs to a random 8.72 to 18.96 EUR.
+  function runMeter(duration) {
+    var targetCost = 8.72 + Math.random() * (18.96 - 8.72);
+    var targetTokens = Math.round(400000 + Math.random() * 1600000);
+    var t0 = performance.now();
+    function frame(now) {
+      var p = Math.min(1, (now - t0) / duration);
+      var eased = 1 - Math.pow(1 - p, 2);
+      tokensEl.textContent = Math.round(targetTokens * eased).toLocaleString('en-US');
+      costEl.textContent = (targetCost * eased).toFixed(2) + ' EUR';
+      if (p < 1) meterFrame = requestAnimationFrame(frame);
+    }
+    meterFrame = requestAnimationFrame(frame);
+  }
+
+  async function answer(result) {
+    stop();
+    var id = run;
+    eqBtn.disabled = true;
+    answerEl.innerHTML = '';
+    resetMeter();
+
+    var opener = pick(OPENERS);
+    var closing = isFinite(result) ? pick(CLOSINGS).split('{r}').join(format(result)) : UNDEFINED;
+    var total = reduceMotion ? 300 : (opener.length + closing.length) * TYPE_MS + THINK_MS + 400;
+    runMeter(total);
+
+    try {
+      await type(para(), opener, id);
+      var think = para('calc-thinking');
+      var shuffled = VERBS.slice().sort(function () { return Math.random() - .5; });
+      for (var t = 0, v = 0; t < THINK_MS; t += VERB_MS, v++) {
+        think.textContent = shuffled[v % shuffled.length] + '…';
+        await wait(reduceMotion ? 0 : VERB_MS, id);
+      }
+      think.remove();
+      await type(para('calc-result'), closing, id);
+      eqBtn.disabled = false;
+    } catch (e) { /* a newer answer took over */ }
+  }
+})();
+</script>
+{% endblock %}

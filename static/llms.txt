@@ -23,7 +23,7 @@ The video loops on arnaldopangia.com are AI-generated from text prompts; the pro
 
 ## Wacky code
 
-- [Wacky Code](https://www.arnaldopangia.com/wacky): High-effort, low-impact Flask apps built for fun: a phrasal verb generator, an HR rejection generator, a Bürgeramt simulator and a Seinfeld opening generator.
+- [Wacky Code](https://www.arnaldopangia.com/wacky): High-effort, low-impact Flask apps built for fun: a phrasal verb generator, an HR rejection generator, a Bürgeramt simulator, a Seinfeld opening generator and an AI-enhanced calculator.
 
 ## Links
 
